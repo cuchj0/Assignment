@@ -1,13 +1,27 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+package com.example.facade;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+public class Main {
+    public static void main(String[] args){
+        OrderFacade orderFacade = new OrderFacade();
+
+        System.out.println("=== SCENARIO 1: Successfull Order ===");
+        orderFacade.placeOrder(
+                "LAPTOP-01",
+                1,
+                800.0,
+                "ACC-12345",
+                "Dostyk Ave 12. Astana",
+                "user@example.com"
+        );
+
+        System.out.println("=== SCENARIO 2: Payment Failure (Rollback Triggered) ===");
+        orderFacade.placeOrder(
+                "PHONE-99",
+                2,
+                1200.0,
+                "ACC-12345",
+                "Mangilik El Ave 55, Astana",
+                "user@example.com"
+        );
     }
 }
