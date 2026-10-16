@@ -1,0 +1,44 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Main {
+    + {static} main(args: String[]) : void
+}
+
+class OrderFacade {
+    - inventoryService: InventoryService
+    - paymentProcessor: PaymentProcessor
+    - shippingService: ShippingService
+    - notificationService: NotificationService
+    + OrderFacade()
+    + placeOrder(itemId: String, quantity: int, price: double, accountId: String, address: String, email: String) : boolean
+}
+
+package "Subsystem" {
+    class InventoryService {
+        + checkStock(itemId: String, quantity: int) : boolean
+        + reserveStock(itemId: String, quantity: int) : boolean
+        + releaseStock(itemId: String, quantity: int) : void
+    }
+
+    class PaymentProcessor {
+        + processPayment(accountId: String, amount: double) : boolean
+        + refundPayment(accountId: String, amount: double) : void
+    }
+
+    class ShippingService {
+        + scheduleDelivery(itemId: String, address: String) : String
+    }
+
+    class NotificationService {
+        + sendEmail(customerEmail: String, message: String) : void
+    }
+}
+
+Main ..> OrderFacade : uses
+OrderFacade --> InventoryService
+OrderFacade --> PaymentProcessor
+OrderFacade --> ShippingService
+OrderFacade --> NotificationService
+
+@enduml
